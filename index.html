@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light" data-colorblind="false">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analisador de Áudio & Frequências de Terapia</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <div class="logo-title">
+        <svg class="icon-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M2 10v4M6 6v12M10 3v18M14 8v8M18 5v14M22 10v4" stroke-linecap="round"/>
+        </svg>
+        <h1>Analisador de Espectro</h1>
+      </div>
+      <div class="header-controls">
+        <button id="btn-colorblind" class="btn-icon" title="Ajuste de cores para daltônicos" aria-label="Modo Daltônico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+          <span class="btn-text">Daltônico</span>
+        </button>
+        <button id="btn-theme" class="btn-icon" title="Alternar Modo Noturno" aria-label="Modo Noturno">
+          <svg id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+          <svg id="icon-sun" class="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+          <span class="btn-text">Tema</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <!-- Seção de Seleção de Arquivo e Player -->
+      <section class="card upload-section">
+        <h2>1. Seleção de Áudio</h2>
+        <div class="file-dropzone" id="dropzone">
+          <input type="file" id="audio-file-input" accept="audio/*" class="file-input-hidden" />
+          <label for="audio-file-input" class="dropzone-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="upload-icon">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+            </svg>
+            <span id="file-label-text">Clique ou arraste um arquivo MP3 / Áudio aqui</span>
+            <span class="file-info" id="file-info">Nenhum arquivo selecionado</span>
+          </label>
+        </div>
+
+        <div class="player-controls disabled" id="player-controls">
+          <div class="playback-bar">
+            <button id="btn-play-pause" class="btn-primary btn-play">
+              <svg id="icon-play" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              <svg id="icon-pause" viewBox="0 0 24 24" fill="currentColor" class="hidden">
+                <rect x="6" y="4" width="4" height="16"></rect>
+                <rect x="14" y="4" width="4" height="16"></rect>
+              </svg>
+              <span id="play-btn-text">Reproduzir</span>
+            </button>
+            <span id="time-current" class="time-display">00:00</span>
+            <input type="range" id="seek-bar" min="0" max="100" value="0" step="0.1" class="slider" />
+            <span id="time-duration" class="time-display">00:00</span>
+          </div>
+
+          <div class="volume-control">
+            <label for="volume-audio">Volume do Áudio:</label>
+            <input type="range" id="volume-audio" min="0" max="1" value="0.8" step="0.01" class="slider" />
+            <span id="volume-audio-val">80%</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Seção de Frequências de Terapia Alternativa -->
+      <section class="card therapy-section">
+        <h2>2. Frequência de Terapia Alternativa</h2>
+        <p class="section-desc">Selecione uma frequência para sobrepor ao áudio durante a reprodução:</p>
+
+        <div class="hz-tabs-grid" id="hz-tabs-container">
+          <button class="hz-tab active" data-hz="0">Nenhuma</button>
+          <button class="hz-tab" data-hz="174" data-color="hz-174">174 Hz <span class="hz-label">Alívio da Dor</span></button>
+          <button class="hz-tab" data-hz="285" data-color="hz-285">285 Hz <span class="hz-label">Regeneração</span></button>
+          <button class="hz-tab" data-hz="396" data-color="hz-396">396 Hz <span class="hz-label">Liberação de Medo</span></button>
+          <button class="hz-tab" data-hz="417" data-color="hz-417">417 Hz <span class="hz-label">Transformação</span></button>
+          <button class="hz-tab" data-hz="432" data-color="hz-432">432 Hz <span class="hz-label">Harmonia Natural</span></button>
+          <button class="hz-tab" data-hz="528" data-color="hz-528">528 Hz <span class="hz-label">Milagres & Reparo</span></button>
+          <button class="hz-tab" data-hz="639" data-color="hz-639">639 Hz <span class="hz-label">Conexões & Relações</span></button>
+          <button class="hz-tab" data-hz="741" data-color="hz-741">741 Hz <span class="hz-label">Intuição & Limpeza</span></button>
+          <button class="hz-tab" data-hz="852" data-color="hz-852">852 Hz <span class="hz-label">Retorno à Ordem</span></button>
+          <button class="hz-tab" data-hz="963" data-color="hz-963">963 Hz <span class="hz-label">Despertar Espiritual</span></button>
+        </div>
+
+        <div class="tone-controls">
+          <div class="custom-hz-input">
+            <label for="custom-hz-slider">Frequência Personalizada: <strong id="custom-hz-val">432 Hz</strong></label>
+            <input type="range" id="custom-hz-slider" min="20" max="2000" value="432" step="1" class="slider" />
+          </div>
+
+          <div class="tone-volume-control">
+            <label for="volume-tone">Volume da Frequência de Terapia:</label>
+            <input type="range" id="volume-tone" min="0" max="1" value="0.3" step="0.01" class="slider" />
+            <span id="volume-tone-val">30%</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Seção de Visualização e Análise do Espectro -->
+      <section class="card visualizer-section">
+        <div class="visualizer-header">
+          <h2>3. Analisador de Espectro</h2>
+          <div class="view-mode-tabs">
+            <button class="view-tab active" data-view="bars">Espectro (Barra)</button>
+            <button class="view-tab" data-view="wave">Forma de Onda</button>
+            <button class="view-tab" data-view="circular">Espectro Circular</button>
+          </div>
+        </div>
+
+        <div class="canvas-container">
+          <canvas id="visualizer-canvas"></canvas>
+        </div>
+
+        <div class="freq-stats" id="freq-stats">
+          <div class="stat-box">
+            <span class="stat-title">Frequência Dominante</span>
+            <span class="stat-value" id="stat-dominant-freq">-- Hz</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-title">Grave (Bass: 20-250Hz)</span>
+            <span class="stat-value" id="stat-bass-level">0%</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-title">Médios (250-4000Hz)</span>
+            <span class="stat-value" id="stat-mid-level">0%</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-title">Agudos (4kHz-20kHz)</span>
+            <span class="stat-value" id="stat-treble-level">0%</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Seção de Exportação -->
+      <section class="card export-section">
+        <h2>4. Exportar Áudio Modificado</h2>
+        <p class="section-desc">Gere e baixe uma versão do seu áudio mesclado com a frequência de terapia selecionada.</p>
+        <div class="export-actions">
+          <button id="btn-export" class="btn-success disabled" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="export-icon">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+            </svg>
+            <span>Processar & Baixar Arquivo WAV</span>
+          </button>
+          <div id="export-status" class="export-status"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <p>Analisador de Espectro de Áudio SPA • GitHub Pages ready</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
